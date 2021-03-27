@@ -8,6 +8,8 @@ let input;
 let changeMode;
 // let modeSelected;
 let currentMode;
+let palleteChanger;
+let colorInput;
 
 function preload(){
     img = loadImage("paaps.png")
@@ -42,6 +44,11 @@ function setup(){
 
     createP("add image")
     input = createFileInput(handleFile);
+
+    colorInput = createInput('')
+    // colorInput.input(addColors);
+    palleteChanger = createButton('change colors')
+    palleteChanger.mousePressed(addColors)
 
     myPalette = [
         color('#5c0423'),
@@ -141,4 +148,18 @@ function modeSelected(){
             pixelator.set( { type: "image", image: myFile } );
             break;
     }
+}
+
+function addColors(){
+    myPalette = [];
+    colors = colorInput.value();
+    let splitString = split(colors, ',');
+    // console.log(splitString);
+    for(i=0;i<splitString.length;i++){
+        // color('#5c0423')
+        addHex = color(str('#'+splitString[i]))
+        console.log(addHex)
+        myPalette.push(addHex)
+    }
+    pixelator.set( { type: "blocks", palette: myPalette } );
 }
