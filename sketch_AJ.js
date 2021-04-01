@@ -1,3 +1,4 @@
+
 let canvas;
 let noise;
 let sliderRange;
@@ -10,9 +11,19 @@ let changeMode;
 let currentMode;
 let palleteChanger;
 let colorInput;
+// let arr = ["dra.ft","!",]
+
+let inputForm;
+let submitButton;
+let txtArray;
+let splitString = [];
+
+let myfont;
+let sliderFont;
 
 function preload(){
     img = loadImage("paaps.png")
+    myfont = loadFont("IBMPlexMono-MediumItalic.ttf")
 }
 function setup(){
     canvas = createCanvas(400,400,WEBGL)
@@ -49,6 +60,7 @@ function setup(){
     // colorInput.input(addColors);
     palleteChanger = createButton('change colors')
     palleteChanger.mousePressed(addColors)
+    palleteChanger.style("margin-right:30px")
 
     myPalette = [
         color('#5c0423'),
@@ -82,35 +94,75 @@ function setup(){
         color('#fecb3c')
     ];
 
-    noiseCanvas = createGraphics(64, 30);
+
+    inputForm = createInput("")
+    submitButton = createButton("add letters to grid")
+    submitButton.mousePressed(inputVal)
+    textAlign(CENTER)
+    textSize(10)
+    
+    createP("fontsize")
+    sliderFont = createSlider(8, 100, 0.2,0);
+    sliderFont.input( () => {
+        pixelator.set({
+            tolerance: sliderTolerance.value()
+        })
+    })
+    noiseCanvas = createGraphics(64, 64);
     noiseCanvas.background(100);
     noiseCanvas.fill(255)
+    noiseCanvas.frameRate(4)
+    frameRate(4)
 
-
-    // pixelator = new Pixelator(window, noiseCanvas, { type: "blocks", palette: myPalette });
+    pixelator = new Pixelator(window, noiseCanvas, { type: "blocks", palette: myPalette });
     // pixelator = new Pixelator(window, noiseCanvas, { type: "gradients", palette: myPalette });
-    pixelator = new Pixelator(window, noiseCanvas, { type: "image", image: img });
+    // pixelator = new Pixelator(window, noiseCanvas, { type: "image", image: img });
     pixelator.changeSource( noiseCanvas );
-}
-
-function draw(){
+    noiseCanvas.textFont(myfont)
+    noiseCanvas.textAlign(CENTER)
+  }
+  
+  function draw(){
     pixelator.update()
+    noiseCanvas.textSize(sliderFont.value())
     // pixelator.set({ range: 0.6 })
     // pixelator.set({ tolerance: 0.001 })
-    // noiseCanvas.background(100)
-    noiseCanvas.loadPixels();
-    for(let i=0; i<noiseCanvas.pixels.length/4; i++) {
-        let x = i % noiseCanvas.width;
-        let y = Math.floor( i / noiseCanvas.width );
-        let mx = pixelator.mouseX;
-        let my = pixelator.mouseY;
-        let nx = noiseCanvas.noise(x*0.005,y*0.005,frameCount*0.0006+(mx+my)*0.25)
-        let c = floor( constrain( map(nx,0.3,0.7,0,255), 0, 255));
-        noiseCanvas.pixels[i*4] = c;
-        noiseCanvas.pixels[i*4+1] = c;
-        noiseCanvas.pixels[i*4+2] = c;
+    noiseCanvas.background(100)
+    // noiseCanvas.loadPixels();
+    // for(let i=0; i<noiseCanvas.pixels.length/4; i++) {
+    //     let x = i % noiseCanvas.width;
+    //     let y = Math.floor( i / noiseCanvas.width );
+    //     let mx = pixelator.mouseX;
+    //     let my = pixelator.mouseY;
+    //     let nx = noiseCanvas.noise(x*0.005,y*0.005,frameCount*0.0006+(mx+my)*0.25)
+    //     let c = floor( constrain( map(nx,0.3,0.7,0,255), 0, 255));
+    //     noiseCanvas.pixels[i*4] = c;
+    //     noiseCanvas.pixels[i*4+1] = c;
+    //     noiseCanvas.pixels[i*4+2] = c;
+    
+    // noiseCanvas.updatePixels();
+    // // noiseCan
+    // // rwidth = width*nx
+    // // rheight = height*nx
+    // // noiseCanvas.text("dra.ft",c,c)
+    // // noiseCanvas.text("*",c,c)
+    // // noiseCanvas.text("!",c,c)
+    // }
+    let w = 0;
+    let h = 5; 
+    let offset = 13;
+if(inputForm.value() !== null){
+  for(i=0;i<splitString.length;i++){
+    let index = (i+(frameCount)) % splitString.length
+    noiseCanvas.text(splitString[index],10+w,10+h)
+    // text(splitString[i],10+w,10+h)
+    w+=offset
+    if(w>noiseCanvas.width){
+      w = 0;
+      h += offset
     }
-    noiseCanvas.updatePixels();
+  }
+}
 }
 
 function handleFile(file) {
@@ -163,3 +215,12 @@ function addColors(){
     }
     pixelator.set( { type: "blocks", palette: myPalette } );
 }
+
+function inputVal(){
+    txt = inputForm.value()
+    if(inputForm.value()!=null){
+    splitString = split(txt,",")
+    console.log(splitString, splitString.length)
+    }
+  //   
+  }

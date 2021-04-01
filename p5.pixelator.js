@@ -183,7 +183,7 @@
 
       } else if(this.settings.type == "blocks") {
 
-        let w = W / 8;
+        let w = W / 16;
         let h = H / 8;
         img = createGraphics(w, h);
         let r1 = random( this.settings.palette );
