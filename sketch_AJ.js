@@ -38,7 +38,7 @@ function setup(){
 	changeMode.changed(modeSelected);
 
     createP("range")
-    sliderRange = createSlider(0, 1, 1, 0.001);
+    sliderRange = createSlider(0.07, 0.1, 0.1, 0.0001);
 		sliderRange.input( () => {
 			pixelator.set({
 				range: sliderRange.value()
