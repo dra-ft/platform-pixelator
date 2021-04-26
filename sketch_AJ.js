@@ -23,7 +23,7 @@ let sliderFont;
 let state = true;
 
 function preload(){
-    img = loadImage("paaps.png")
+    img = loadImage("anisha.jpeg")
     myfont = loadFont("IBMPlexMono-MediumItalic.ttf")
 }
 function setup(){
@@ -39,7 +39,7 @@ function setup(){
 	changeMode.changed(modeSelected);
 
     createP("range")
-    sliderRange = createSlider(0, 1, 1, 0.001);
+    sliderRange = createSlider(0.07, 0.1, 0.1, 0.0001);
 		sliderRange.input( () => {
 			pixelator.set({
 				range: sliderRange.value()
@@ -64,6 +64,7 @@ function setup(){
     palleteChanger.style("margin-right:30px")
 
     myPalette = [
+<<<<<<< HEAD
         color('#ffffff'),
         color('#0000ff'),
         color('#3eb489'),
@@ -93,6 +94,11 @@ function setup(){
         // color('#fbe343'),
         // color('#fc6320'),
         // color('#fecb3c')
+=======
+      color('#3eb489'),
+      color('#ffffff'),
+      color('#0000ff')
+>>>>>>> 04aace8ebc0c4d323f4c549428add8f6ceb79500
     ];
 
 
@@ -135,7 +141,7 @@ function setup(){
     pixelator.update()
     noiseCanvas.textSize(sliderFont.value())
     // pixelator.set({ range: 0.6 })
-    // pixelator.set({ tolerance: 0.001 })
+    pixelator.set({ tolerance: 0.001 })
     noiseCanvas.background(100)
     // noiseCanvas.loadPixels();
     // for(let i=0; i<noiseCanvas.pixels.length/4; i++) {
@@ -149,7 +155,11 @@ function setup(){
     //     noiseCanvas.pixels[i*4+1] = c;
     //     noiseCanvas.pixels[i*4+2] = c;
     // }
+<<<<<<< HEAD
     // noiseCanvas.updatePixels();
+=======
+    noiseCanvas.image(img, 0, 0, 64, 64)
+>>>>>>> 04aace8ebc0c4d323f4c549428add8f6ceb79500
     let w = 0;
     let h = 5; 
     let offset = 13;
@@ -226,8 +236,11 @@ function inputVal(){
     }
   //   
   }
+<<<<<<< HEAD
 
 function frameStop(){
   state != state
   
 }
+=======
+>>>>>>> 04aace8ebc0c4d323f4c549428add8f6ceb79500
