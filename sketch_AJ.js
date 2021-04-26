@@ -20,6 +20,7 @@ let splitString = [];
 
 let myfont;
 let sliderFont;
+let state = true;
 
 function preload(){
     img = loadImage("paaps.png")
@@ -46,7 +47,7 @@ function setup(){
 		})
 	
     createP("tolerance")
-    sliderTolerance = createSlider(0, 1, 0.2,0);
+    sliderTolerance = createSlider(0, 1, 0.2,0.001);
     sliderTolerance.input( () => {
         pixelator.set({
             tolerance: sliderTolerance.value()
@@ -63,35 +64,35 @@ function setup(){
     palleteChanger.style("margin-right:30px")
 
     myPalette = [
-        color('#5c0423'),
-        color('#02205e'),
-        color('#453a14'),
-        color('#2d260c'),
-        color('#451a0b'),
-        color('#0b3b8d'),
-        color('#171717'),
-        color('#1e1e20'),
-        color('#212025'),
-        color('#2664c7'),
-        color('#3b3a38'),
-        color('#91cec9'),
-        color('#9e9171'),
-        color('#9fd4ca'),
-        color('#b89a20'),
-        color('#c70b23'),
-        color('#cecdc9'),
-        color('#d0b7ba'),
-        color('#d6e8fc'),
-        color('#d8d5d0'),
-        color('#e86d1f'),
-        color('#e8eeea'),
-        color('#ec4942'),
-        color('#f5e865'),
-        color('#f697c3'),
-        color('#fa79b9'),
-        color('#fbe343'),
-        color('#fc6320'),
-        color('#fecb3c')
+        color('#ffffff'),
+        color('#0000ff'),
+        color('#3eb489'),
+        // color('#2d260c'),
+        // color('#451a0b'),
+        // color('#0b3b8d'),
+        // color('#171717'),
+        // color('#1e1e20'),
+        // color('#212025'),
+        // color('#2664c7'),
+        // color('#3b3a38'),
+        // color('#91cec9'),
+        // color('#9e9171'),
+        // color('#9fd4ca'),
+        // color('#b89a20'),
+        // color('#c70b23'),
+        // color('#cecdc9'),
+        // color('#d0b7ba'),
+        // color('#d6e8fc'),
+        // color('#d8d5d0'),
+        // color('#e86d1f'),
+        // color('#e8eeea'),
+        // color('#ec4942'),
+        // color('#f5e865'),
+        // color('#f697c3'),
+        // color('#fa79b9'),
+        // color('#fbe343'),
+        // color('#fc6320'),
+        // color('#fecb3c')
     ];
 
 
@@ -120,6 +121,14 @@ function setup(){
     pixelator.changeSource( noiseCanvas );
     noiseCanvas.textFont(myfont)
     noiseCanvas.textAlign(CENTER)
+  
+    stoploop = createButton("stop animation");
+    stoploop.mousePressed(frameStop)
+    if (state) {
+      frameRate(4)
+    } else {
+      frameRate(0)
+    }
   }
   
   function draw(){
@@ -134,26 +143,19 @@ function setup(){
     //     let y = Math.floor( i / noiseCanvas.width );
     //     let mx = pixelator.mouseX;
     //     let my = pixelator.mouseY;
-    //     let nx = noiseCanvas.noise(x*0.005,y*0.005,frameCount*0.0006+(mx+my)*0.25)
+    //     let nx = noiseCanvas.noise(x*0.005,y*0.005,0.0006+(mx+my)*0.25)
     //     let c = floor( constrain( map(nx,0.3,0.7,0,255), 0, 255));
     //     noiseCanvas.pixels[i*4] = c;
     //     noiseCanvas.pixels[i*4+1] = c;
     //     noiseCanvas.pixels[i*4+2] = c;
-    
-    // noiseCanvas.updatePixels();
-    // // noiseCan
-    // // rwidth = width*nx
-    // // rheight = height*nx
-    // // noiseCanvas.text("dra.ft",c,c)
-    // // noiseCanvas.text("*",c,c)
-    // // noiseCanvas.text("!",c,c)
     // }
+    // noiseCanvas.updatePixels();
     let w = 0;
     let h = 5; 
     let offset = 13;
 if(inputForm.value() !== null){
   for(i=0;i<splitString.length;i++){
-    let index = (i+(frameCount)) % splitString.length
+    let index = (i) % splitString.length
     noiseCanvas.text(splitString[index],10+w,10+h)
     // text(splitString[i],10+w,10+h)
     w+=offset
@@ -224,3 +226,8 @@ function inputVal(){
     }
   //   
   }
+
+function frameStop(){
+  state != state
+  
+}
